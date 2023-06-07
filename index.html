@@ -2,6 +2,33 @@
 <html>
   <head>
     <title>현재 시간 표시</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        padding-top: 100px;
+      }
+
+      #currentTime {
+        font-size: 24px;
+        margin-bottom: 20px;
+      }
+
+      #result {
+        margin-top: 20px;
+        font-size: 20px;
+      }
+
+      button {
+        font-size: 24px;
+        padding: 10px 20px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+    </style>
     <script>
       function showCurrentTime() {
         var currentDate = new Date();
@@ -37,7 +64,6 @@
   </head>
   <body>
     <div id="currentTime"></div>
-    <br/>
     <button onclick="showClickTime()">버튼</button>
     <div id="result"></div>    
   </body>
