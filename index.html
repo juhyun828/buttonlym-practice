@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>현재 시간 표시</title>
+    <script>
+      function showCurrentTime() {
+        var currentDate = new Date();
+        var year = currentDate.getFullYear();
+        var month = ("0" + (currentDate.getMonth() + 1)).slice(-2);
+        var day = ("0" + currentDate.getDate()).slice(-2);
+        var hours = ("0" + currentDate.getHours()).slice(-2);
+        var minutes = ("0" + currentDate.getMinutes()).slice(-2);
+        var milliseconds = ("00" + currentDate.getMilliseconds()).slice(-3);
+
+        var formattedTime = year + ":" + month + ":" + day + " " + hours + ":" + minutes + ":" + milliseconds;
+
+        document.getElementById("currentTime").innerHTML = formattedTime;
+      }
+
+      function showClickTime() {
+        var currentDate = new Date();
+        var hours = ("0" + currentDate.getHours()).slice(-2);
+        var minutes = ("0" + currentDate.getMinutes()).slice(-2);
+        var seconds = ("0" + currentDate.getSeconds()).slice(-2);
+        var milliseconds = ("00" + currentDate.getMilliseconds()).slice(-3);
+
+        var formattedTime = hours + ":" + minutes + ":" + seconds + ":" + milliseconds;
+        
+        var timeEntry = document.createElement("div");
+        timeEntry.innerHTML = "클릭!: " + formattedTime;
+        document.getElementById("result").appendChild(timeEntry);
+      }      
+
+      // 0.001초마다 현재 시간 업데이트
+      setInterval(showCurrentTime, 1);
+    </script>
+  </head>
+  <body>
+    <div id="currentTime"></div>
+    <br/>
+    <button onclick="showClickTime()">버튼</button>
+    <div id="result"></div>    
+  </body>
+</html>
