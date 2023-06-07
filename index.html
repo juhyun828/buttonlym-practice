@@ -17,46 +17,89 @@
       #result {
         margin-top: 20px;
         font-size: 20px;
+        max-height: 300px;
+        overflow-y: auto;
       }
 
       button {
-        font-size: 24px;
-        padding: 10px 20px;
+        font-size: 30px;
+        padding: 15px 30px;
         background-color: #4CAF50;
         color: white;
         border: none;
         border-radius: 5px;
         cursor: pointer;
       }
-    </style>
-    <script>
-      function showCurrentTime() {
-        var currentDate = new Date();
-        var year = currentDate.getFullYear();
-        var month = ("0" + (currentDate.getMonth() + 1)).slice(-2);
-        var day = ("0" + currentDate.getDate()).slice(-2);
-        var hours = ("0" + currentDate.getHours()).slice(-2);
-        var minutes = ("0" + currentDate.getMinutes()).slice(-2);
-        var milliseconds = ("00" + currentDate.getMilliseconds()).slice(-3);
 
-        var formattedTime = year + ":" + month + ":" + day + " " + hours + ":" + minutes + ":" + milliseconds;
+      /* 모바일 화면 스타일 */
+      @media (max-width: 480px) {
+        body {
+          padding-top: 50px;
+        }
 
-        document.getElementById("currentTime").innerHTML = formattedTime;
+        #currentTime {
+          font-size: 18px;
+          margin-bottom: 10px;
+        }
+
+        #result {
+          margin-top: 10px;
+          font-size: 16px;
+          max-height: 200px;
+        }
+
+        button {
+          font-size: 24px;
+          padding: 10px 20px;
+        }
       }
 
-      function showClickTime() {
-        var currentDate = new Date();
-        var hours = ("0" + currentDate.getHours()).slice(-2);
-        var minutes = ("0" + currentDate.getMinutes()).slice(-2);
-        var seconds = ("0" + currentDate.getSeconds()).slice(-2);
-        var milliseconds = ("00" + currentDate.getMilliseconds()).slice(-3);
+      .latest-entry {
+        color: red;
+      }
+    </style>
+    <script>
+      const showCurrentTime = () => {
+        const currentDate = new Date();
+        const year = currentDate.getFullYear();
+        const month = String(currentDate.getMonth() + 1).padStart(2, "0");
+        const day = String(currentDate.getDate()).padStart(2, "0");
+        const hours = String(currentDate.getHours()).padStart(2, "0");
+        const minutes = String(currentDate.getMinutes()).padStart(2, "0");
+        const milliseconds = String(currentDate.getMilliseconds()).padStart(3, "0");
 
-        var formattedTime = hours + ":" + minutes + ":" + seconds + ":" + milliseconds;
-        
-        var timeEntry = document.createElement("div");
-        timeEntry.innerHTML = "클릭!: " + formattedTime;
-        document.getElementById("result").appendChild(timeEntry);
-      }      
+        const formattedTime = `${year}:${month}:${day} ${hours}:${minutes}:${milliseconds}`;
+
+        document.getElementById("currentTime").innerHTML = formattedTime;
+      };
+
+      const showClickTime = () => {
+        const currentDate = new Date();
+        const hours = String(currentDate.getHours()).padStart(2, "0");
+        const minutes = String(currentDate.getMinutes()).padStart(2, "0");
+        const seconds = String(currentDate.getSeconds()).padStart(2, "0");
+        const milliseconds = String(currentDate.getMilliseconds()).padStart(3, "0");
+
+        const formattedTime = `${hours}:${minutes}:${seconds}:${milliseconds}`;
+
+        const resultElement = document.getElementById("result");
+        if (resultElement) {
+          const timeEntry = document.createElement("div");
+          timeEntry.innerHTML = `클릭!: ${formattedTime}`;
+          resultElement.appendChild(timeEntry);
+
+          if (resultElement.childElementCount > 20) {
+            resultElement.lastChild.scrollIntoView(false);
+          }
+
+          // 마지막으로 추가된 요소를 빨간색으로 표시
+          const latestEntry = resultElement.getElementsByClassName("latest-entry");
+          if (latestEntry.length > 0) {
+            latestEntry[0].classList.remove("latest-entry");
+          }
+          timeEntry.classList.add("latest-entry");
+        }
+      };
 
       // 0.001초마다 현재 시간 업데이트
       setInterval(showCurrentTime, 1);
